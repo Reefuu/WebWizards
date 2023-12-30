@@ -16,20 +16,18 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="{{ asset('admin/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/vendor/quill/quill.snow.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+    <link href="admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="admin/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="admin/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="admin/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="admin/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="admin/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="admin/vendor/simple-datatables/style.css" rel="stylesheet">
 
-    <title>
-        @yield('title')
-    </title>
+    <title>My Projects</title>
 
     {{-- <!-- Main CSS File --> --}}
-    <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}">
+    <link href="admin/css/style.css" rel="stylesheet">
 
     {{-- Table --}}
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -38,13 +36,12 @@
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 
-
 </head>
 
 
-<body>
-    <div class="headerrrrrr">
+<body class="toggle-sidebar">
 
+    <div class="headerrrrrr">
         <header id="header" class="header fixed-top d-flex align-items-center">
 
             <div class="d-flex align-items-center justify-content-between">
@@ -52,7 +49,6 @@
                     <img src="{{ asset('logo.png') }}" alt="product">
                     <span class="d-none d-lg-block">Dashboard</span>
                 </a>
-                <i class="bi bi-list toggle-sidebar-btn collapseButtononHeader"></i>
             </div><!-- End Logo -->
 
             <nav class="header-nav ms-auto">
@@ -96,64 +92,56 @@
         </header><!-- End Header -->
 
 
-        <!-- ======= Sidebar ======= -->
-        <aside id="sidebar" class="sidebar">
-            <ul class="sidebar-nav" id="sidebar-nav">
+        {{-- MAIN CODE --}}
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="/admin-progress/{{ $project_id }}">
-                        <i class="bi bi-bar-chart"></i>
-                        <span>Progress</span>
-                    </a>
-                </li>
+        <main id="main" class="main">
+            <div class="pagetitle">
+                <div class="row justify-content-between">
+                    <div class="col">
+                        <h1>All Projects</h1>
+                    </div>
+    
+                    <div class="col text-end">
+                        <a href="/order_now"><button type="button" class="saveButton">New Project</button></a>
+                    </div>
+                </div>
+            </div><!-- End Page Title -->
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="/admin-requirements/{{ $project_id }}">
-                        <i class="bi bi-clipboard-check"></i>
-                        <span>Requirements</span>
-                    </a>
-                </li>
+            <section class="section">
+                @if ($all_Projects->count() > 0)
+                    @foreach ($all_Projects as $project)
+                        <div class="row aBox">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h4 class="pt-2">{{ $project->project_name }} (Status: {{ $project->status }})</h4>
+                                {{-- <a href="{{ route('projects.show', $project->id) }}" class="saveButton">See Details</a> --}}
+                                <a href="{{ route('project.details', ['projectId' => $project->id]) }}" class="saveButton">See Details</a>
+                                {{-- <a href="" class="saveButton">See Details</a> --}}
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <p>No projects available.</p>
+                @endif
+            </section>
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="/admin-feedbacks/{{ $project_id }}">
-                        <i class="bi bi-chat-dots"></i>
-                        <span>Feedbacks</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="/admin-project-details/{{ $project_id }}">
-                        <i class="bi bi-gear"></i>
-                        <span>Project Details</span>
-                    </a>
-                </li>
-
-            </ul>
-
-        </aside>
-
-    </div>
-    <!-- End Sidebar-->
-
-    @yield('content')
+        </main><!-- End #main -->
 
 
 
-    <!-- Vendor JS Files -->
-    <script src="{{ asset('admin/vendor/apexcharts/apexcharts.min.js') }}" defer></script>
-    <script src="{{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
-    <script src="{{ asset('admin/vendor/chart.js/chart.min.js') }}" defer></script>
-    <script src="{{ asset('admin/vendor/echarts/echarts.min.js') }}" defer></script>
-    <script src="{{ asset('admin/vendor/quill/quill.min.js') }}" defer></script>
-    <script src="{{ asset('admin/vendor/simple-datatables/simple-datatables.js') }}" defer></script>
-    <script src="{{ asset('admin/vendor/tinymce/tinymce.min.js') }}" defer></script>
-    <script src="{{ asset('admin/vendor/php-email-form/validate.js') }}" defer></script>
-    <script src="{{ asset('admin/js/main.js') }}" defer></script>
-    <script src="{{ asset('admin/js/jquery.min.js') }}" defer></script>
+        <!-- Vendor JS Files -->
+        <script src="admin/vendor/apexcharts/apexcharts.min.js" defer></script>
+        <script src="admin/vendor/bootstrap/js/bootstrap.bundle.min.js" defer></script>
+        <script src="admin/vendor/chart.js/chart.min.js" defer></script>
+        <script src="admin/vendor/echarts/echarts.min.js" defer></script>
+        <script src="admin/vendor/quill/quill.min.js" defer></script>
+        <script src="admin/vendor/simple-datatables/simple-datatables.js" defer></script>
+        <script src="admin/vendor/tinymce/tinymce.min.js" defer></script>
+        <script src="admin/vendor/php-email-form/validate.js" defer></script>
+        <script src="admin/js/main.js" defer></script>
+        <script src="admin/js/jquery.min.js" defer></script>
 
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
-    </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+        </script>
 
 
 </body>
